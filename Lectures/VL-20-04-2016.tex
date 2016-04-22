@@ -1,0 +1,212 @@
+\documentclass[../skript.tex]{subfiles}
+
+	\section{Continuum Mechanics}\label{c1se3}
+
+		\subsection*{From particle to continuum mechanics}
+			Let $N>>1$ and let $C_h(x)$ denote a cube of side length $h$ centered at $x\in\mathbb{R}^d$. Then we have a fraction of particles inside $c_h(x)$. Moreover there is a fraction of mass inside $c_h(x)$ at time $t$ given by
+			\[
+				f_h(x,t) = \frac{1}{|c_h|}\sum_{i,x_i(t)\in c_h} m_i
+			\]
+			where $m_i$ is the corresponding mass / volume of particle $i$. Analogeously inside of $c_h$ one has a fraction of $p$, that is 
+			\[
+				\vec p_h(x,t) = \frac{1}{|c_h| \sum_{i,x_i\in c_h} \vec p_i}
+			\]
+			where $\vec p_i$ is the momentum / volume of particle $i$. One wants appropriate limits:
+			\begin{eqnarray*}
+				f_h(x,t) \to f(x,t) \text{ mass density} && \text{for }h\to 0\\
+				\vec h(x,t) \to \vec p(x,t) \text{ momentum density }&&\text{for }N\to\infty.
+			\end{eqnarray*}
+			The above constructions yield a velocity function
+			\[
+				v_h \coloneqq \frac{p_n}{f_n} \biggl(= \vec v_i - \frac{\vec p_i}{m_i}\biggr).
+			\]
+
+			\textbf{Dictionary}\par
+			$N$ particles $\Leftrightarrow$ Continuum\par
+			Initial position $\vec x_i(0) = \vec x_i\in\mathbb{R}^d \Leftrightarrow$ a piece of continuus material $\Omega\subset\mathbb{R}^d$\par 
+			Notion $\vec x_i(t,x) $ $\Leftrightarrow$ $x:\mathbb{R}\times\Omega\to\mathbb{R}^d$ with $(t,x)\mapsto x(t,x)$\newline\newline\noindent
+
+		\subsection{Definitions}
+			Possible configurations for $N$ particles: $(\vec x_1,\vec x_N)\in(\mathbb{R}^d)^N$  s.t. $\vec x_i\neq\vec x_j$ for $i\neq j$ (particles do not overlap).\par 
+			For a continuous material, all possible deformations are either stationary, rotations, translations, ...
+
+			\begin{definition}[Deformation]\label{def1}
+				Let $\Omega\subset\mathbb{R}^d$ be a \textbf{domain} (i.e. open and connected), let $k\geq 1$. A $\mathbf{C^k}$\textbf{-deformation} (simply a \textbf{deformation}) is a map $\varphi:\Omega\to\mathbb{R}^d$ s.t.
+				\begin{itemize}
+					\item [$i)$] $\varphi\in C^k(\Omega,\mathbb{R}^d)$
+					\item [$ii)$] $\varphi$ has a continuous extension to $\overline\Omega$ and this extension is invertible (as a function of $\varphi(\overline\Omega)$)
+					\item [$iii)$] $\varphi$ preserves the orientation, i.e. $\det D\varphi(x) > 0,\,\forall x\in\Omega$
+				\end{itemize}
+				where $D\varphi(x)\in\mathbb{R}^{d\times d}$  is defined as
+				\[
+					(D\varphi)_{i,j} = \frac{\partial\varphi_i}{\partial x_j}.
+				\]
+				In this context, $\Omega$ is called the \textbf{reference configuration}.\par 
+			\end{definition}
+
+			$ii)$ means that $x\neq y \Rightarrow \varphi(x)\neq \varphi(y)$ (so $\vec c_i\neq \vec x_j,\forall i\neq j$)\par
+			$iii)$ means that $\varphi$ is invertible $\Rightarrow$ $\det D\varphi(x) \neq 0,\forall x$ $\Rightarrow$ the determinant doesn't switch the sign so it's either always $>0$ or $< 0$. If $\varphi(x) = x$ then
+			\[
+				\det D\varphi = \det I = 1 > 0
+			\]
+			and this excludes flipping. For $d=2$ e.g. one has $\varphi(x_1,x_2)=(x_2,x_1)$ for $\varphi:\mathbb{R}^2\to\mathbb{R}^2$. For this transformation we have 
+			\[
+				D\varphi = \begin{bmatrix} 0&1\\1&0\end{bmatrix} \Rightarrow \det D\varphi = -1 < 0.
+			\]
+			We see that in $d=2$ this is excluded. However, in $d=3$ this is possible: It's a rotation along $x_1=x_2$
+
+			A \textbf{special class of deformations} are translations and rotations.
+			\begin{definition}\label{def2}
+				A deformation $\varphi:\Omega\to\mathbb{R}^d$ is called \textbf{rigid} deformation, if
+				\[
+					D\varphi(x) \in SO(d),\quad\forall x\in\Omega
+				\]
+			\end{definition}
+			\begin{remark}
+				Recall that
+				\[
+					SO(d) \coloneqq \left\{ A\in\mathbb{R}^{d\times d}:\,A^TA = I \wedge \det A = 1 \right\} 
+				\]
+				is the special orthogonal group.
+			\end{remark}
+			\begin{center}
+			\framebox{Informally, rigid deformations locally look like a rotation $+$ translation}
+			\end{center}
+			\begin{example}
+				Let $\varphi:\mathbb{R}^d\to\mathbb{R}^d$ be an \underline{affine map}, i.e. 
+				\[
+					\exists A\in\mathbb{R}^{d\times d},\,b\in\mathbb{R}^d
+				\]
+				s.t.
+				\[
+					\varphi(x) = A(x) + b,\quad\forall x.
+				\]
+				$\varphi$ is invertible \underline{iff} $A$ is invertible, i.e. $\det A\neq 0$. $\varphi$ is a deformation, \underline{iff} $\det A > 0$!\par 
+				\textbf{Is $\mathbf{\varphi}$ a rigid deformation?}\par 
+				This is true \underline{iff} $D\varphi = A\in SO(d)$ and we know that a deformation is a rigid deformation, if it locally looks like $Ax+b$.\par 
+				\textbf{Surprise:} $\varphi\in SO(d)$ $\Rightarrow$ motion is a rigid affine deformation!
+			\end{example}
+			\begin{theorem}[Liouville]\label{thm3}
+				Let $\Omega\subset\mathbb{R}^d$ a domain and $\varphi:\Omega\to\mathbb{R}^d$ a deformation. The following are equivalent
+				\begin{enumerate}[i)]
+					\item $\varphi$ is a rigid deformation
+					\item $\varphi$ is a rigid \underline{affine} deformation, i.e. $\exists b\in\mathbb{R}^d$ and $A\in\mathbb{R}^{d\times d}$ s.t. $\varphi(x) = Ax + b,\,\forall x\in\Omega$
+					\item $\forall x,y\in\Omega$ it holds that $\varphi$ is an isometry, i.e.
+					\[
+						\underbrace{|\varphi(x) - \varphi(y)|}_{\text{euclidean norm}} = |y-x|
+					\]
+					\item (local version of $ii)$) $\varphi$ is a \underline{local} rigid deformation, i.e. $\forall x\in\Omega$ we can find $\kappa_x>0,A_x\in SO(d), b_x\in\mathbb{R}^d$ s.t.
+					\[
+						\varphi(y) = A_xy + b_x,\quad\forall y\in B(x,\kappa)
+					\]
+					\item (local version if $iii)$) $\forall x\in\Omega\exists\kappa > 0: |y-z| = |\varphi(y)-\varphi(z)|$, $\forall y,z\in B(x,\kappa)$
+				\end{enumerate}
+			\end{theorem}
+			\begin{theorem}\label{thm4}
+				Let $\Omega\subset\mathbb{R}^d$ domain and $\varphi$ a deformation. Then for all \underline{measurable} sets $U\subseteq\Omega$ and for all \underline{integrable} functions $g\in L^1(\varphi(U))$ we have 
+				\[
+					\int_{\varphi(U)} g(x)\,dx^d = \int_U g(\varphi(x))\det D\varphi(x)\,dx^d
+				\] 
+			\end{theorem}
+			\begin{proof}
+				Change of coordinates.
+			\end{proof}
+
+		\subsection{Motion}\label{c1se3su3}
+			\begin{definition}\label{def5}
+				Let $\Omega\subset\mathbb{R}^d$ a domain. A $C^3$-map $\chi:\mathbb{R}\times\Omega\to\mathbb{R}^d$ is a \textbf{motion}, if for each time $t\in\mathbb{R}$ the map $\chi_t:\Omega\to\mathbb{R}^d, \cdot\mapsto \chi(t,\cdot)$ is a \underline{deformation}.
+			\end{definition}
+			 In general we study $f(t,\chi(t,x))$  (e.g. mass distribution, force,...), where $t$ is the time and $\chi(t,x)$ is the position of the `particle' $x$ at time $t$. We can either use $(t,x)$ independent variables (Lagrangian or material coordinates), or we use $(t,u)$ as independent variables (Eulerian or spatial coordinates). The Lagrangian coordinates are better for use with particles and the Eulerian are more convenient when working with fluids ('moving coordinates', snapshot of the fluid at time $t$).
+		 	\begin{definition}
+		 		Let $x:\mathbb{R}\times\Omega\to\mathbb{R}^d$ be a motion.
+		 		\begin{enumerate}
+		 			\item $\Omega_t = \chi_t(\Omega) = \{(t,\chi(t,x)|\,x\in\Omega\}$ is the \textbf{region occupied by the body at time} $t$
+		 			\item $\mathcal{T} = \{(t,x):\,t\in\mathbb{R},x\in\Omega_t\}$ is the \textbf{trajectory in space-time of the body}
+		 			\item $\chi_t^{-1}:\Omega_t\to\Omega$ with $x\mapsto \chi_t^{-1}(x) = X$ s.t. $\chi(t,X) = x$ is the \textbf{reference map at time} $t$
+		 			\item  $\chi^{-1}:\mathcal{T}\to\mathbb{R}\times\Omega,\,(t,x)\mapsto(t,\chi_t^{-1}(x))$ is the \textbf{reference map}
+		 		\end{enumerate}
+		 	\end{definition}
+		 	\begin{definition}[Material and spatial fields]
+		 		Let $\chi:\mathbb{R}\times\Omega\to\mathbb{R}^d$ be a motion.
+		 		\begin{enumerate}
+		 			\item A map $\Phi:\mathbb{R}\times\Omega\to\mathbb{R}^m,\,(t,x)\mapsto\Phi(t,x)$ with $m\geq 1$ is called a \textbf{material field}
+		 			\item A map $\varphi:\mathcal{T}\to\mathbb{R}^m,\,(t,\chi)\mapsto\varphi(t,\chi)$ is called a \textbf{spatial field}
+		 		\end{enumerate}
+		 	\end{definition}
+		 	\begin{remark}
+		 		In general, capital letters will be used for material fields and small letters for spatial fields.
+		 	\end{remark}
+		 	\begin{definition}
+		 		We can relate material and spatial fields as follows:
+		 		\begin{enumerate}
+		 			\item Let $\varphi:\mathcal{T}\to\mathbb{R}^m$ a spatial field. The map $\varphi_m:\mathbb{R}\times\Omega\to\mathbb{R}^m$ defined by
+		 			\[
+		 				\varphi_m(t,x) = \varphi(t,\chi(t,x)).
+		 			\]
+		 			is called the \textbf{material description of} $\varphi$
+		 			\item Let $\Phi:\mathbb{R}\times\Omega\to\mathbb{R}^m$ a material field. The map $\Phi_s:\mathcal{T}\to\mathbb{R}^m$ defined by
+		 			\[
+		 				\Phi_s(t,\chi) = \Phi(t,\chi_t^{-1}(x))
+		 			\]
+		 			is called the \textbf{spatial description of }$\Phi$
+		 		\end{enumerate}
+		 	\end{definition}
+		 	\begin{example}
+		 		Let $\chi:\mathbb{R}\times\Omega\to\mathbb{R}^d$ a motion. This is a material field. 
+		 		The reference map $\chi^{-1}:\mathcal{T}\to\mathbb{R}\times\Omega$ is a spatial field. \par 
+		 		The deformation gradient $(\frac{\partial \chi_i(t,x)}{\partial x_j})_{j=1}^d$ is a material field. Also the velocity $v(t,x) = \frac{\partial x}{\partial t}(t,x)$ is a material field.\par
+		 		\textbf{Define} the velocity in spatial coordinates: $\nu = V_s$, i.e. 
+		 		\[
+		 			\nu(t,\chi) = V(t,X(t,\chi)) = V(t,\chiˆ{-1}_t(x)).
+		 		\]
+		 		One usually computes \underline{first} the time derivative in material coordinates!
+		 	\end{example}
+		 	\subsection*{Trajectory and streamlines}
+		 	The trajectory is reconstructed from $\nu(t,x)$ for all $t$ and the streamlines are reconstructed from $\nu(t_0,x)$ for some fixed $t_0$.
+		 	\begin{lemma}
+		 		Let $\nu(t,x)$ be a given spatial field $\nu:\mathcal{T}\to\mathbb{R}^d$. Let $x\in\Omega$ be a fixed point. Thenn the motion starting at $x$ compatible with $\nu$,
+		 		\begin{eqnarray*}
+		 			\chi_x:&&\mathbb{R}\to\mathcal{T}\\
+		 				&&t\mapsto\chi(t,x)
+		 		\end{eqnarray*}
+		 		is a solution $y(t)$ of the (nonlinear) ODE
+		 		\[
+		 			\vec y'(t) = \vec\nu(t,\vec y(t))
+		 		\]
+		 	\end{lemma}
+		 	\begin{proof}
+		 		\begin{IEEEeqnarray*}{rCl}
+		 			y'(t) &=& \partial_t\chi(t,x) \\
+		 			&=& v(t,x)\\
+		 			&=& \nu_m(t,x)\\
+		 			&=& \nu(t,\underbrace{\chi(t,x)}_{=y(t)})\\
+		 			&=& \nu(t,y(t)).
+		 		\end{IEEEeqnarray*}
+		 	\end{proof}
+		 	\begin{definition}
+		 		Let $\nu$ be a given spatial field.
+		 		\begin{enumerate}
+		 			\item We call a \textbf{trajectory} a solution of the ODE
+		 			\[
+		 				y'= \nu(t,y(t)).
+		 			\]
+		 			We have different solutions $\forall x$
+		 			\item We call a \textbf{streamline} a solution of 
+		 			\[
+		 				z'(s) = \nu(t,z(s))
+		 			\]
+		 		\end{enumerate}
+		 	\end{definition}
+		 	\begin{example}
+		 		Let $d=2$, $\nu(t,\chi) = (\cos t,\sin t)$ (independent of spatial coordinate). The trajectory is given by
+		 		\[
+		 			y(t) = (\alpha+\sin t,\beta-\cos t)
+		 		\]
+		 		and a streamline is
+		 		\[
+		 			z(s) = (\alpha+(\cos t)s,\beta+(\sin t)s).
+		 		\]
+		 	\end{example}
+		 	\begin{remark}
+		 		If $\nu$ is time independent, then the streamlines coincide with the trajectory in the above example.
+		 	\end{remark}
